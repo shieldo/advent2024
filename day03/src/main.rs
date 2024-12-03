@@ -1,4 +1,5 @@
 use regex::Regex;
+use std::sync::LazyLock;
 
 fn main() {
     let input = include_str!("input.txt");
@@ -6,20 +7,19 @@ fn main() {
     println!("Answer to part 2: {}", part2(input));
 }
 
+static MUL_FUNCTION: LazyLock<Regex> = LazyLock::new(|| Regex::new(r"mul\((\d+),(\d+)\)").unwrap());
+static DISABLED_BLOCK: LazyLock<Regex> =
+    LazyLock::new(|| Regex::new(r"(?ms)don't\(\).*?do\(\)").unwrap());
+
 fn part1(input: &str) -> usize {
-    Regex::new(r"mul\((\d+),(\d+)\)")
-        .unwrap()
+    MUL_FUNCTION
         .captures_iter(input)
         .map(|c| c[1].parse::<usize>().unwrap() * c[2].parse::<usize>().unwrap())
         .sum()
 }
 
 fn part2(input: &str) -> usize {
-    Regex::new(r"(?ms)don't\(\).*?do\(\)")
-        .unwrap()
-        .split(input)
-        .map(part1)
-        .sum()
+    DISABLED_BLOCK.split(input).map(part1).sum()
 }
 
 #[cfg(test)]
