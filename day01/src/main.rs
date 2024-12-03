@@ -10,7 +10,7 @@ fn combine_lists(input: &str) -> usize {
     list1
         .iter()
         .zip(list2.iter())
-        .map(|(&a, &b)| (a as isize - b as isize).abs() as usize)
+        .map(|(&a, &b)| (a as isize - b as isize).unsigned_abs())
         .sum()
 }
 

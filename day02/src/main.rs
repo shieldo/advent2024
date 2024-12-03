@@ -32,7 +32,7 @@ fn find_dampened_safe_report_count(input: &str) -> usize {
                 .cycle()
                 .take(report_count.pow(2))
                 .enumerate()
-                .filter_map(|(i, n)| (i % (report_count + 1) != 0).then(|| n))
+                .filter_map(|(i, n)| (i % (report_count + 1) != 0).then_some(n))
                 .chunks(report_count - 1)
                 .into_iter()
                 .any(|num| report_is_good(&num.collect_vec()))

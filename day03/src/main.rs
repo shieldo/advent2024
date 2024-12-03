@@ -10,7 +10,7 @@ fn part1(input: &str) -> usize {
     Regex::new(r"mul\((\d+),(\d+)\)")
         .unwrap()
         .captures_iter(input)
-        .map(|c| &c[1].parse::<usize>().unwrap() * &c[2].parse::<usize>().unwrap())
+        .map(|c| c[1].parse::<usize>().unwrap() * c[2].parse::<usize>().unwrap())
         .sum()
 }
 
